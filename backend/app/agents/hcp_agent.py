@@ -34,9 +34,10 @@ def router(state: AgentState):
         return "suggest_followup"
     elif "sentiment" in last_message or "feeling" in last_message or "mood" in last_message:
         return "analyze_sentiment"
+    elif "what" in last_message or "when" in last_message or "how" in last_message or "did" in last_message or "which" in last_message or "tell me" in last_message:
+        return "rag_query"  # ✨ new route
     else:
         return "general_response"
-
 # ── General response node ───────────────────────────────────
 def general_response(state: AgentState):
     response = llm.invoke(state["messages"])

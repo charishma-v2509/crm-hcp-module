@@ -1,5 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
+
+from app.tools.rag_query_tool import rag_query_tool
 from app.database import get_db
 from app.tools.log_interaction import log_interaction
 from app.tools.edit_interaction import edit_interaction
@@ -54,6 +56,10 @@ class FollowupRequest(BaseModel):
     outcomes: str = ""
     sentiment: str = "Neutral"
 
+class RAGQuery(BaseModel):
+    query: str
+    hcp_id: Optional[int] = None
+
 # ── Tool 1: Log Interaction ─────────────────────────────────
 @router.post("/log")
 def log(data: InteractionCreate, db: Session = Depends(get_db)):
@@ -82,23 +88,15 @@ def sentiment(data: SentimentRequest):
 # ── AI Chat endpoint ────────────────────────────────────────
 @router.post("/chat")
 def chat(data: ChatMessage, db: Session = Depends(get_db)):
-    state = AgentState(
-        messages=[HumanMessage(content=data.message)],
-        tool_name="",
-        tool_input={},
-        tool_output=""
-    )
-
     message_lower = data.message.lower()
 
-    # Route to correct tool based on message
     if any(word in message_lower for word in ["log", "save", "record"]):
-        return {"response": "Please use the form on the left to log an interaction, or provide full details here.", "tool": "log_interaction"}
+        return {"response": "Please use the form on the left to log an interaction.", "tool": "log_interaction"}
 
     elif any(word in message_lower for word in ["history", "previous", "past"]):
         if data.hcp_id:
             return get_hcp_history(db, data.hcp_id)
-        return {"response": "Please provide an HCP to get history for.", "tool": "get_hcp_history"}
+        return {"response": "Please select an HCP first.", "tool": "get_hcp_history"}
 
     elif any(word in message_lower for word in ["follow", "next step", "suggest"]):
         return suggest_followup({"topics_discussed": data.message})
@@ -106,6 +104,21 @@ def chat(data: ChatMessage, db: Session = Depends(get_db)):
     elif any(word in message_lower for word in ["sentiment", "feeling", "mood"]):
         return analyze_sentiment({"topics_discussed": data.message})
 
+    # ✨ RAG routing — for any informational question
+    elif any(word in message_lower for word in ["what", "when", "how", "did", "which", "tell me", "who", "where"]):
+        return rag_query_tool(db, data.message, data.hcp_id)
+
     else:
+        state = AgentState(
+            messages=[HumanMessage(content=data.message)],
+            tool_name="",
+            tool_input={},
+            tool_output=""
+        )
         result = agent.invoke(state)
         return {"response": result["tool_output"], "tool": "general_response"}
+    
+# ── RAG Query endpoint ──────────────────────────────────────
+@router.post("/rag-query")
+def rag_query(data: RAGQuery, db: Session = Depends(get_db)):
+    return rag_query_tool(db, data.query, data.hcp_id)
