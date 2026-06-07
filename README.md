@@ -1,6 +1,6 @@
 # Healthcare CRM — AI-Powered HCP Interaction Module
 
-> An agentic CRM system for Life Sciences field reps to log, analyze, and act on Healthcare Professional (HCP) interactions — powered by LangGraph, RAG, and Groq LLMs.
+An agentic CRM system for Life Sciences field reps to log, analyze, and act on Healthcare Professional (HCP) interactions — powered by LangGraph, RAG, and Groq LLMs.
 
 ## What makes this interesting
 
