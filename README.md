@@ -1,10 +1,10 @@
-# 🏥 AI-First Healthcare CRM — HCP Interaction Module
+# AI-First Healthcare CRM — HCP Interaction Module
 
 An AI-powered CRM for Life Sciences field representatives to log, analyze, and manage interactions with Healthcare Professionals (HCPs) — built with LangGraph agents, RAG pipeline, FastAPI, and React.
 
 ---
 
-## 🔍 Problem It Solves
+## Problem It Solves
 
 Pharmaceutical field reps manually log dozens of HCP interactions per week — a time-consuming, error-prone process. This module replaces that with:
 - A **structured form** for fast data entry
@@ -13,21 +13,21 @@ Pharmaceutical field reps manually log dozens of HCP interactions per week — a
 
 ---
 
-## ✨ Key Features
+## Key Features
 
 | Feature | Description |
 |---|---|
-| 🤖 AI Chat Interface | Log interactions conversationally via an LLM-powered assistant |
-| 📋 Structured Form | Full-form interaction logging with HCP selection, topics, materials, outcomes |
-| 🧠 AI Summary | Auto-generated interaction summary using Groq LLM |
-| 💬 Sentiment Detection | AI detects HCP sentiment (Positive / Neutral / Negative) |
-| 📌 Follow-up Suggestions | 3 actionable follow-up steps generated per interaction |
-| 📜 Interaction History | Fetch and review all past interactions with any HCP |
-| ⚡ Agentic Workflow | LangGraph orchestrates all AI tasks as structured tool calls |
+| AI Chat Interface | Log interactions conversationally via an LLM-powered assistant |
+| Structured Form | Full-form interaction logging with HCP selection, topics, materials, outcomes |
+| AI Summary | Auto-generated interaction summary using Groq LLM |
+| Sentiment Detection | AI detects HCP sentiment (Positive / Neutral / Negative) |
+| Follow-up Suggestions | 3 actionable follow-up steps generated per interaction |
+| Interaction History | Fetch and review all past interactions with any HCP |
+| Agentic Workflow | LangGraph orchestrates all AI tasks as structured tool calls |
 
 ---
 
-## 🖼️ Screenshots
+## Screenshots
 
 ### Empty Form + AI Chat Panel
 ![Empty Form](screenshots/crm-empty.png)
@@ -37,7 +37,7 @@ Pharmaceutical field reps manually log dozens of HCP interactions per week — a
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 User (Form / Chat)
@@ -65,7 +65,7 @@ User (Form / Chat)
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -90,7 +90,7 @@ The core AI engine is a **LangGraph-based agentic workflow** that decides which 
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 crm-hcp-module/
@@ -112,7 +112,7 @@ crm-hcp-module/
 
 ---
 
-## ⚙️ Setup & Installation
+## Setup & Installation
 
 ### Prerequisites
 - Python 3.9+
@@ -166,13 +166,13 @@ npm start
 
 ---
 
-## 🚀 Live Demo
+## Live Demo
 
 🔗 **[View Live App](https://crm-hcp-module-seven.vercel.app)**
 
 ---
 
-## 💡 What Makes This Different from a CRUD App
+## What Makes This Different from a CRUD App
 
 Most student CRM projects are basic Create-Read-Update-Delete applications. This project is different:
 
